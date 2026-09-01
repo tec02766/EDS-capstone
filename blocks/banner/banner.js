@@ -7,7 +7,7 @@ export default function decorate(block){
 
         const image = cells[0];
         const content = cells[1];
-        
+
         image.classList.add('banner-image');
         content.classList.add('banner-content');
 
