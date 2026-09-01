@@ -1,0 +1,22 @@
+.banner > div{
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    column-gap: 24px;
+    padding: 24px;
+    align-items: center;
+    background-color: #091854;
+    color: #fff;
+    border-radius: 4px
+}
+
+
+.banner .banner-content a{
+    background-color: #fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    color: #2e2e2e;
+}
+
+
+
