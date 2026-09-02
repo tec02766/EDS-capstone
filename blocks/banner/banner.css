@@ -18,6 +18,12 @@
     color: #2e2e2e;
 }
 
+@media (width <= 1024px){
+    .banner > div{
+        grid-template-columns: 1fr;
+    }
+}
+
 
 
 
