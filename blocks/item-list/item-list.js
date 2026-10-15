@@ -9,10 +9,31 @@ function renderPage(items, container, page, limit) {
   paginatedItems.forEach((item) => {
     const itemEl = document.createElement('div');
     itemEl.classList.add('item-card');
-    itemEl.innerHTML = `
-      <h3>${item.title || item.Title || 'Untitled Item'}</h3>
-      <p>${item.description || item.Description || ''}</p>
-    `;
+
+    // Extract all valid object property keys for this row
+    const keys = Object.keys(item);
+
+    if (keys.length > 0) {
+      // 1. Convention: Use the very first column key as the main bold title/header
+      const titleKey = keys[0];
+      const titleValue = item[titleKey] || 'N/A';
+
+      let htmlContent = `<h3>${titleValue}</h3>`;
+
+      // 2. Loop through all remaining keys dynamically to build out metadata lines
+      keys.slice(1).forEach((key) => {
+        // Skip metadata keys if they happen to exist in your indexing rules
+        if (key.startsWith(':')) return;
+
+        const value = item[key] !== undefined && item[key] !== null ? item[key] : '';
+        htmlContent += `<p><strong>${key}:</strong> ${value}</p>`;
+      });
+
+      itemEl.innerHTML = htmlContent;
+    } else {
+      itemEl.innerHTML = '<p><em>Empty Row</em></p>';
+    }
+
     container.append(itemEl);
   });
 }
@@ -99,6 +120,8 @@ export default async function decorate(block) {
 
     updateView(currentPage);
   } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Failed to render item-list block:', error);
     block.innerHTML = '<p class="error">Error loading items.</p>';
   }
 }
